@@ -1,64 +1,67 @@
 require("dotenv").config();
-
-//var axios = require("axios");
-
-//import keys.js
-var keys = require("./keys");
-
+// var moment = require("moment");
+var axios = require("axios");
+var Spotify = require("node-spotify-api");
 var fs = require("fs");
+//import keys.js
+var keys = require("./keys.js");
+// var spotify = new Spotify(keys.spotify);
 
-
-var spotify = new spotify(keys.spotify);
 //arguments
+var search = process.argv[2];
+var term = process.argv.slice(3).join(" ");
 
-   // (look at node activities 15 bank.js)
+// (look at node activities 15 bank.js)
+switch (search) {
+    case "movie-this":
+        movieThis();
+        break;
 
-       //switch (movieVar) {
-           //case "movie-this";
-             //movieThis();
-             //break;
+    case "concert-this":
+        concertThis();
+        break;
 
-        //switch (bandVar) {
-           //case "concert-this";
-             //concertThis();
-             //break;
+    case "spotify-this song":
+        spotifyThisSong();
+        break;
 
-        //switch (spotifyVar) {
-           //case "spotify-this song";
-             //spotifyThisSong();
-             //break;
-
-        //switch (doVar) {
-           //case "do-what-it-says";
-             //doWhatItSays();
-             //break;
-       //}
+    case "do-what-it-says":
+        doWhatItSays();
+        break;
+}
 
 //functions//
 
-    // (look at node activities 17-OMDB_Axios.js & 18-OMDB_Axios)
-
-    //axios.get("http://www.omdbapi.com/?t=" + movieVar + "&y=&plot=short&apikey=trilogy").then(
-//   function(response) {
-//     console.log("The movie's rating is: " + response.data.imdbRating);
-//   }
-// );
-
 // `movie-this`(***FIRST***)
-    // Title of the movie.
-    // Year the movie came out.
-    // IMDB Rating of the movie.
-    // Rotten Tomatoes Rating of the movie.
-    // Country where the movie was produced.
-    // Language of the movie.
-    // Plot of the movie.
-    // Actors in the movie.
-    //default
+// (look at node activities 17-OMDB_Axios.js & 18-OMDB_Axios)
+function movieThis() {
+    axios.get("http://www.omdbapi.com/?t=" + term + "&y=&plot=short&apikey=trilogy").then(
+        function (response) {
+            console.log("Everything you ever wanted to know about " + response.data.Title + ":")
+            console.log("Plot: " + response.data.Plot)
+            console.log(response.data.Title + " came out in " + response.data.Year + " and is rated " + response.data.Rated + ".");
+            console.log("It stars " + response.data.Actors)
+            console.log("Imdb gives it a " + response.data.imdbRating + " and Rotten Tomatoes gives it a " + response.data.Ratings[1].Value)
+            // console.log(response.data);
+
+            //default
+        });
+}
 
 //`concert-this <artist/band name here>`(***SECOND***)
+function concertThis() {
+    
+}
     //venue name
     //venue location
     //date of event (moment "MM/DD/YYYY")
+
+ //   axios.get("https://rest.bandsintown.com/artists/" + artist + "?app_id=codingbootcamp").then(
+//   function(response) {
+
+//}
+
+
 
 //node-spotify-api
 // `spotify-this-song`(***THIRD***)
@@ -70,5 +73,6 @@ var spotify = new spotify(keys.spotify);
 
 // `do-what-it-says`(***FOURTH***)
     //run spotify-this-song from random.txt
+
 
 
