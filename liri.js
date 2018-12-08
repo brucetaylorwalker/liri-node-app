@@ -1,10 +1,11 @@
 require("dotenv").config();
-// var moment = require("moment");
+// var fs = require("fs");
+var moment = require("moment");
 var axios = require("axios");
-var Spotify = require("node-spotify-api");
-var fs = require("fs");
+// var Spotify = require("node-spotify-api");
+
 //import keys.js
-var keys = require("./keys.js");
+// var keys = require("./keys.js");
 // var spotify = new Spotify(keys.spotify);
 
 //arguments
@@ -21,7 +22,7 @@ switch (search) {
         concertThis();
         break;
 
-    case "spotify-this song":
+    case "spotify-this-song":
         spotifyThisSong();
         break;
 
@@ -45,33 +46,45 @@ function movieThis() {
             // console.log(response.data);
 
             //default
+            
         });
 }
 
 //`concert-this <artist/band name here>`(***SECOND***)
 function concertThis() {
-    
+    axios.get("https://rest.bandsintown.com/artists/" + term + "/events?app_id=codingbootcamp").then(
+        function (response) {
+            // console.log(response);
+           
+            //date of event (moment "MM/DD/YYYY")
+            console.log(term + " will be playing at " + response.data[0].venue.name + " in " + response.data[0].venue.city + ", " + response.data[0].venue.region + " on " + response.data[0].datetime)
+            // console.log(response.data[0].venue.name);
+            // console.log(response.data[0].venue.city);
+            // console.log(response.data[0].venue.region);
+            // console.log(response.data[0].datetime);
+        });
 }
-    //venue name
-    //venue location
-    //date of event (moment "MM/DD/YYYY")
 
- //   axios.get("https://rest.bandsintown.com/artists/" + artist + "?app_id=codingbootcamp").then(
-//   function(response) {
-
-//}
-
-
-
-//node-spotify-api
 // `spotify-this-song`(***THIRD***)
-    //artist(s)
-    //song name
-    //preview link of song from spotify
-    //album song is from
-    //default
+//node-spotify-api
+
+// function spotifyThisSong() {
+//     spotify.search({ type: 'track', query: term }, function (err, data) {
+//         if (err) {
+//             return console.log('Error occurred: ' + err);
+//         }
+//         console.log(data);
+
+        //artist(s)
+        //song name
+        //preview link of song from spotify
+        //album song is from
+        //default
+//     });
+// }
 
 // `do-what-it-says`(***FOURTH***)
+// function doWhatItSays()
     //run spotify-this-song from random.txt
 
 
